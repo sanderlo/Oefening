@@ -64,11 +64,11 @@ public abstract class Product {
 	
 	@Override
 	public String toString() {
-		return this.getNaam();
+		return "<img " + this.getNaam() + "<br></p>";
 	}
 	
 	public String ImageURL(){
-		return getNaam() + ".jpg";
+		return "<img src=\"../Serv2/" + this.getNaam() + ".jpg\"><br>";
 	}
 	
 	

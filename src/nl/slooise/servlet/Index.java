@@ -39,18 +39,14 @@ public class Index extends HttpServlet {
 				+ "<p style=\"color:blue\">Welkom op mijn webwinkel voor kantoorartikelen</p>" 
 				+ "<p>Voor nu kan je maar 1 product selecteren</p>"
 	//			+ "<img src=\"../Serv2/Desert.jpg\"><br>"
-				+ "<a href = \"product1.html\">Product 1</a><br>"
-				+ "<a href = \"product2.html\">Product 2</a>"
 				+ "<form name=\"Productselectie\" method=\"post\" action=\"Product\">"
-				+ "Product 1 <input type=\"radio\" name=\"products\" value=\"1\" checked><br>"
-				+ "Product 2 <input type=\"radio\" name=\"products\" value=\"2\"><br>"
-				+ "Product 3 <input type=\"radio\" name=\"products\" value=\"3\"><br>"
+				+ "Product 1 <input type=\"radio\" name=\"products\" value=\"Boeken\" checked><br>"
+				+ "Product 2 <input type=\"radio\" name=\"products\" value=\"Pennen\"><br>"
+				+ "Product 3 <input type=\"radio\" name=\"products\" value=\"Product3\"><br>"
 				+ "<input type=\"submit\" value=\"Gekozen\" />"
-				+ "<input type=\"color\">"
 				+ "</form>"
 				+ HTML_END;
 		
-	//	String s = readFile(getServletContext().getRealPath("/index.html"));
 		response.getWriter().append(tekst);
 	}
 
