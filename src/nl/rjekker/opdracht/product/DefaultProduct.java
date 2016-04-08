@@ -1,7 +1,7 @@
 package nl.rjekker.opdracht.product;
 
 /* Deze class gebruik ik als superclass voor andere product classes */
-public class DefaultProduct extends Product {
+public class DefaultProduct extends Products {
 	// BTW hoeft hier niet :)
 	private String naam;
 	private int prijsPerEenheid;

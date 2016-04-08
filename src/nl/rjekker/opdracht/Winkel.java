@@ -7,22 +7,22 @@ import nl.rjekker.opdracht.bestelling.Winkelwagen;
 import nl.rjekker.opdracht.product.Beperkt;
 import nl.rjekker.opdracht.product.DefaultProduct;
 import nl.rjekker.opdracht.product.KwantumKorting;
-import nl.rjekker.opdracht.product.Product;
+import nl.rjekker.opdracht.product.Products;
 import nl.rjekker.opdracht.product.Voedsel;
 
 public class Winkel {
 
-	public static void printVoorraad(Product[] voorraad){
+	public static void printVoorraad(Products[] voorraad){
 		System.out.println("Product                Prijs         Voorraad");
 		System.out.println("==============================================");
 		int idx = 1;
-		for(Product p: voorraad){
+		for(Products p: voorraad){
 			System.out.println(
 					String.format("%d %-23s%3s per %3s %9s", 
 							idx++,
 							p.getNaam(), 
 							p.getPrijsPerEenheid(),
-							Product.getEenheidNaam(p.getEenheid()),
+							Products.getEenheidNaam(p.getEenheid()),
 							p.getVoorraad()));
 		}
 		System.out.println("==============================================");
@@ -45,7 +45,7 @@ public class Winkel {
 		}
 	}
 	
-	public static Product vraagProduct(Scanner s, Product[] voorraad){
+	public static Products vraagProduct(Scanner s, Products[] voorraad){
 		return voorraad[vraagGetal("Selecteer product: ", s, 
 				i -> (i <= voorraad.length && i > 0))-1];
 	}
@@ -69,11 +69,11 @@ public class Winkel {
 	}
 	
 	public static void main(String[] args) {
-		Product[] voorraad = {
+		Products[] voorraad = {
 				new DefaultProduct("Boek: OCA Exam Guide", 50, 100),
 				new KwantumKorting("OCA mock exam", 10, 10000),
-				new Beperkt("OCA Examen", 100, 10, Product.STUKS, 3),
-				new Voedsel("Koffie", 1, 100000, Product.LITER)
+				new Beperkt("OCA Examen", 100, 10, Products.STUKS, 3),
+				new Voedsel("Koffie", 1, 100000, Products.LITER)
 		};
 		Winkelwagen w = new Winkelwagen();
 		
@@ -81,14 +81,14 @@ public class Winkel {
 		while(true){
 			printVoorraad(voorraad);
 			
-			Product p = vraagProduct(s, voorraad);
+			Products p = vraagProduct(s, voorraad);
 			int hoeveelheid = vraagHoeveelheid(s);
 			
 			try {
 				w.bestel(p, hoeveelheid);
 			} catch(Beperkt.HoeveelheidBeperktException e){
 				System.out.println("Helaas, van dit product mag u niet zoveel bestellen");
-			} catch(Product.NegatieveVoorraadException e){
+			} catch(Products.NegatieveVoorraadException e){
 				System.out.println("Helaas, zoveel is er niet op voorraad");
 			}
 			

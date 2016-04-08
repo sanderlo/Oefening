@@ -1,10 +1,10 @@
 package nl.rjekker.opdracht.bestelling;
 
-import nl.rjekker.opdracht.product.Product;
+import nl.rjekker.opdracht.product.Products;
 
 /* Dit is een immutable class, dat houdt de dingen simpel */
 public class ProductBestelling {
-	private Product product;
+	private Products product;
 	private int hoeveelheid;
 	
 	public int getHoeveelheid() {
@@ -26,13 +26,13 @@ public class ProductBestelling {
 	}
 
 	// protected getter voor product: winkelwagen mag hier wel bij
-	protected Product getProduct(){
+	protected Products getProduct(){
 		return this.product;
 	}
 	
 	// let op: protected constructor!
 	// alternatieve oplossing is deze class als private inner class van Winkelwagen
-	protected ProductBestelling(Product p, int hoeveelheid) {
+	protected ProductBestelling(Products p, int hoeveelheid) {
 		this.product = p;
 		this.hoeveelheid = hoeveelheid;
 	}

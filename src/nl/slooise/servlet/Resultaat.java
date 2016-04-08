@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Resultaat
@@ -27,17 +28,26 @@ public class Resultaat extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		
 		String s = request.getQueryString();
 		int i = Integer.parseInt(s.substring(s.indexOf('a')+1, s.indexOf('b')));
 		int j = Integer.parseInt(s.substring(s.indexOf('b')+1, s.indexOf('o')));
 		String o = s.substring(s.indexOf('o')+1);
 		
+		int r = 0;
+		
 		switch(o){
-		case "plus": response.getWriter().append("" + (i + j));break;
-		case "min": response.getWriter().append("" + (i - j));break;
-		case "keer": response.getWriter().append("" + (i * j));break;
-		case "deel": response.getWriter().append("" + (i / j));break;
+		case "plus": r = (i + j);break;
+		case "min": r = (i - j);break;
+		case "keer": r = (i * j);break;
+		case "deel": r = (i / j);break;
 		}
+		
+		response.getWriter().append("" + r);
+		
+		
+		session.setAttribute("uitkomsten", r);
 	}
 
 	/**

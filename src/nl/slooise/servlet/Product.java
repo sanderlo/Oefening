@@ -3,11 +3,17 @@ package nl.slooise.servlet;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import nl.rjekker.opdracht.product.DefaultProduct;
+import nl.rjekker.opdracht.product.Products;
 
 /**
  * Servlet implementation class Product
@@ -40,11 +46,10 @@ public class Product extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//s = readFile(getServletContext().getRealPath(s));
 		
 		String s = request.getParameter("products");
 		
-		nl.rjekker.opdracht.product.Product pr = new nl.rjekker.opdracht.product.DefaultProduct(s, 10, 100);
+		Products pr = new DefaultProduct(s, 10, 100);
 		
 		String tekst = HTML_START;
 		switch (s)
@@ -54,7 +59,10 @@ public class Product extends HttpServlet {
 		case "Product3": tekst += pr.getNaam() + pr.ImageURL();break;
 		default: tekst = "Er gaat iets mis" + HTML_END;
 		}
-		
+
+		tekst += "<form name=\"formulier\" method=\"post\" action=\"Index\">"
+				+ "<input type=\"submit\" value=\"Bestellen!\" />"
+				+ "</form><br>";
 		tekst += HTML_END;
 		
 	//	nl.rjekker.opdracht.product.Product pr = new nl.rjekker.opdracht.product.DefaultProduct(product, 3, 5);
@@ -66,25 +74,20 @@ public class Product extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession(false);
+		
+		String s = request.getParameter("products");
+		Products pr = new DefaultProduct(s, 10, 100);
+		
+		ArrayList<Products> winkelwagen;
+		
+		if (request.getSession().getAttribute("ww") != null){
+			winkelwagen = (ArrayList<Products>)session.getAttribute("ww");
+		} else {
+			winkelwagen = new ArrayList<>();
+		}
+		
+		winkelwagen.add(pr);
+		response.sendRedirect("Index");
 	}
-	
-	String readFile(String fileName) throws IOException {
-	    BufferedReader br = new BufferedReader(new FileReader(fileName));
-	    try {
-	        StringBuilder sb = new StringBuilder();
-	        String line = br.readLine();
-
-	        while (line != null) {
-	            sb.append(line);
-	            sb.append("\n");
-	            line = br.readLine();
-	        }
-	        System.out.println(sb.toString());
-	        return sb.toString();
-	    } finally {
-	        br.close();
-	    }
-	}
-
 }

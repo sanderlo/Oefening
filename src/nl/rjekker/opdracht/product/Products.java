@@ -2,7 +2,7 @@ package nl.rjekker.opdracht.product;
 
 import nl.rjekker.opdracht.btw.BTWCalculator;
 
-public abstract class Product {
+public abstract class Products {
 	public static final int STUKS = 1;
 	public static final int KILO = 2;
 	public static final int LITER = 3;
@@ -64,7 +64,7 @@ public abstract class Product {
 	
 	@Override
 	public String toString() {
-		return "<img " + this.getNaam() + "<br></p>";
+		return "<br><img " + this.getNaam() + "<br></p>";
 	}
 	
 	public String ImageURL(){
@@ -73,13 +73,13 @@ public abstract class Product {
 	
 	
 	/* Constructors */
-	public Product(String naam, int prijs, int voorraad, int eenheid){
+	public Products(String naam, int prijs, int voorraad, int eenheid){
 		this.setNaam(naam);
 		this.setEenheid(eenheid);
 		this.setVoorraad(voorraad);
 		this.setPrijsPerEenheid(prijs);
 	}
-	public Product(String naam, int prijs, int voorraad){
+	public Products(String naam, int prijs, int voorraad){
 		this(naam, prijs, voorraad, STUKS);
 	}
 }

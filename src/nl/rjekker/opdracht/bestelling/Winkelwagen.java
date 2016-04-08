@@ -3,7 +3,7 @@ package nl.rjekker.opdracht.bestelling;
 import java.util.ArrayList;
 
 import nl.rjekker.opdracht.btw.BTWCalculator;
-import nl.rjekker.opdracht.product.Product;
+import nl.rjekker.opdracht.product.Products;
 
 public class Winkelwagen {
 	private ArrayList<ProductBestelling> data = new ArrayList<ProductBestelling>();
@@ -28,7 +28,7 @@ public class Winkelwagen {
 		return sum;
 	}
 	
-	public void bestel(Product product, int hoeveelheid){
+	public void bestel(Products product, int hoeveelheid){
 		product.haalUitVoorraad(hoeveelheid);
 		this.data.add(new ProductBestelling(product, hoeveelheid));
 	}

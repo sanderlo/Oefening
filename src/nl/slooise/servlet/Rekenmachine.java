@@ -1,6 +1,8 @@
 package nl.slooise.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,19 +11,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Demo3
+ * Servlet implementation class Rekenmachine
  */
-@WebServlet("/Demo3")
-public class Demo3 extends HttpServlet {
+@WebServlet("/Rekenmachine")
+public class Rekenmachine extends HttpServlet {
 	
    
-    public String maakHTML(int resultaten){
-    	int r = resultaten;
+    public String maakHTML(ArrayList<Integer> resultaten){
+    	
+
     	
     	String s = "<html><head>"
         		+ "<meta charset=\"ISO-8859-1\"><title>Index</title>"
         		+ "</head><body>";
-    	s+= r + "<br>"; 
+    	
+    	if (resultaten != null){
+    		for (int i : resultaten){
+    			s += "<p>" + i + "</p>"; 
+    		}
+    	}
+    	
     	s+= "<form name=\"Productselectie\" method=\"post\" action=\"\">"
 		+ "Getal 1: <input type=\"text\" name=\"getal1\"><br>"
 		+ "Getal 2: <input type=\"text\" name=\"getal2\"><br>"
@@ -30,8 +39,11 @@ public class Demo3 extends HttpServlet {
 		  + "<option value=\"min\">-</option>"
 		  + "<option value=\"keer\">*</option>"
 	  	+ "<option value=\"deel\">/</option>"
-		+ "</select><br>"
-		+ "<input type=\"submit\" value=\"Gekozen\" />"
+		+ "</select>"
+		+ "<input type=\"submit\" value=\"Gekozen\" >"
+		+ "</form>"
+	  	+ "<form name=\"cl\" method=\"post\" action=\"\">"
+		+ "<input type=\"submit\" value=\"clear\" >"
 		+ "</form>";
     	
     	s +="</body></html>";
@@ -43,7 +55,7 @@ public class Demo3 extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Demo3() {
+    public Rekenmachine() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,10 +66,10 @@ public class Demo3 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		if (request.getAttribute("uitkomsten") != null){
+		if (request.getAttribute("resulaten") != null){
 			int i = (int)request.getAttribute("uitkomsten");
 		}
-		response.getWriter().append(maakHTML(0));		
+		response.getWriter().append(maakHTML(null));		
 	}
 
 	/**
@@ -75,9 +87,27 @@ public class Demo3 extends HttpServlet {
 			response.sendError(404, "Dit was geen juiste invoer!");
 		}
 		
-		response.sendRedirect("Resultaat?a" + i + "b" + j + "o" + request.getParameter("sel"));
+		String o = request.getParameter("sel");
+		int r = 0;
 		
-		doGet(request, response);
+		switch(o){
+		case "plus": r = (i + j);break;
+		case "min": r = (i - j);break;
+		case "keer": r = (i * j);break;
+		case "deel": r = (i / j);break;
+		}
+		
+		ArrayList<Integer> results;
+		
+		if (request.getSession().getAttribute("resultaten") != null){
+			results = (ArrayList<Integer>)request.getSession().getAttribute("resultaten");
+		} else {
+			results = new ArrayList<>();
+		}
+		results.add(r);
+		request.getSession().setAttribute("resultaten", results);
+		
+		response.getWriter().append(maakHTML(results));
 	}
 
 }

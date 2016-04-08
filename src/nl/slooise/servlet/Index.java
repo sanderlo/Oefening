@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Index
@@ -35,11 +36,13 @@ public class Index extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		
 		String tekst = HTML_START 
 				+ "<p style=\"color:blue\">Welkom op mijn webwinkel voor kantoorartikelen</p>" 
 				+ "<p>Voor nu kan je maar 1 product selecteren</p>"
 	//			+ "<img src=\"../Serv2/Desert.jpg\"><br>"
-				+ "<form name=\"Productselectie\" method=\"post\" action=\"Product\">"
+				+ "<form name=\"Productselectie\" method=\"get\" action=\"Product\">"
 				+ "Product 1 <input type=\"radio\" name=\"products\" value=\"Boeken\" checked><br>"
 				+ "Product 2 <input type=\"radio\" name=\"products\" value=\"Pennen\"><br>"
 				+ "Product 3 <input type=\"radio\" name=\"products\" value=\"Product3\"><br>"
@@ -55,6 +58,8 @@ public class Index extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		doGet(request, response);
 	}
 	
